@@ -11,26 +11,27 @@ win.border(0) # Draw the border
 win.nodelay(1) # or -1. We don't wait user hits next key, but continue.
 
 # Snake and Food
-snake = [(4, 10), (4, 9), (4, 8)]
-food = (10, 20)
+snake = [(4, 10), (4, 9), (4, 8)] # A list storing coordinates with tuples, because it's imutable
+food = (10, 20) # Just a tuple storing the food initial coordinates
 
-win.addch(food[0], food[1], '#')
+win.addch(food[0], food[1], '#') # Add the first food with the index of the coordinates
 
 # Game Logic
 score = 0 # 'score' starts at '0'
 
-ESC = 27
-key = curses.KEY_RIGHT
-while key != ESC:
-    win.addstr(0, 2, 'Score' + str(score) + ' ')
-    win.timeout(150 -(len(snake)) // 5 + len(snake) //10 % 120) # Increase Speed
+ESC = 27 # 'ESC' key is defined as 'key 27' in the 'curses' module
+key = curses.KEY_RIGHT # Starts by moving the snake to the right
+while key != ESC: # While the user don't press the 'ESC' key, the 'while loop' should continue
+    win.addstr(0, 2, 'Score ' + str(score) + ' ') # Add the 'Score' string, plus the value of 'score' in the line 0, colunm 2
+    win.timeout(150 -(len(snake)) // 5 + len(snake) //10 % 120) # Increase Speed based on the length of the snake
     
-    prev_key = key
+    prev_key = key # Previous key is the current key (in this case is the 'right arrow key')
     event = win.getch() # Get next character
-    key = event if event != -1 else prev_key
+    key = event if event != -1 else prev_key # The next key is the value of 'event', if the snake don't hit itself, else, just continue with the previous key (current key to the same direction)
     
-    if key not in [curses.KEY_LEFT, curses.KEY_UP, curses.KEY_DOWN, ESC]:
-        key = prev_key
+    # If none of those keys is pressed, then...
+    if key not in [curses.KEY_LEFT, curses.KEY_RIGHT, curses.KEY_UP, curses.KEY_DOWN, ESC]:
+        key = prev_key # Current key is the previous key
     
     # Calculate the next coordinates
     y = snake[0][0]
@@ -44,7 +45,7 @@ while key != ESC:
     if key == curses.KEY_RIGHT:
         x += 1
     
-    snake.insert(0, (y, x)) # Append 0(n)
+    snake.insert(0, (y, x)) # append 0(n)
     # check if we hit the border
     if y == 0: break
     if y == 19: break
@@ -52,21 +53,21 @@ while key != ESC:
     if x == 59: break
 
     # If snake runs over itself
-    if snake[0] in snake[1:]: break
-    if snake[0] == food:
+    if snake[0] in snake[1:]: break # If the head ([0]) of the snake hits any other body part ([1:])
+    if snake[0] == food: # If the head is equal 
         # Eat the food
         score += 1
-        food = ()
-        while food == ():
-            food = (randint(1,18), randint(1,58))
-            if food in snake:
-                food = ()
-        win.addch(food[0], food[1], '#')
+        food = () # The food disapear
+        while food == (): # While food is none
+            food = (randint(1,18), randint(1,58)) # Then food apears once again randomly in any place on the screen
+            if food in snake: # If food is in the snake, then...
+                food = () # Food is none
+        win.addch(food[0], food[1], '#') # Add a new '#' (food) character on the window
     else:
         # Move snake
         last = snake.pop()
         win.addch(last[0], last[1], ' ')
 
-    win.addch(snake[0][0], snake[0][1], '*')
+    win.addch(snake[0][0], snake[0][1], '*') # Draw the snake
 curses.endwin() # Destroys window
 print(f'Final score = {score}') # Print the value of 'score' variable on the screen
