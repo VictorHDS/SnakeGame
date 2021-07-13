@@ -34,8 +34,8 @@ while key != ESC: # While the user don't press the 'ESC' key, the 'while loop' s
         key = prev_key # Current key is the previous key
     
     # Calculate the next coordinates
-    y = snake[0][0]
-    x = snake[0][1]
+    y = snake[0][0] # Don't draw the snake in 'y' axis
+    x = snake[0][1] # Draw the head of the snake in 'x' axis
     if key == curses.KEY_DOWN:
         y += 1
     if key == curses.KEY_UP:
@@ -44,7 +44,7 @@ while key != ESC: # While the user don't press the 'ESC' key, the 'while loop' s
         x -= 1
     if key == curses.KEY_RIGHT:
         x += 1
-    
+
     snake.insert(0, (y, x)) # append 0(n)
     # check if we hit the border
     if y == 0: break
@@ -65,9 +65,9 @@ while key != ESC: # While the user don't press the 'ESC' key, the 'while loop' s
         win.addch(food[0], food[1], '#') # Add a new '#' (food) character on the window
     else:
         # Move snake
-        last = snake.pop()
-        win.addch(last[0], last[1], ' ')
+        last = snake.pop() # Remove the last '*' of the snake
+        win.addch(last[0], last[1], ' ') # Put a blank space ' ' in the last part of the snake
 
-    win.addch(snake[0][0], snake[0][1], '*') # Draw the snake
+    win.addch(snake[0][0], snake[0][1], '*') # Draw the snake again with '*'
 curses.endwin() # Destroys window
 print(f'Final score = {score}') # Print the value of 'score' variable on the screen
