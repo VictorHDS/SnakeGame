@@ -20,15 +20,15 @@ while True: #Infinite loop
     for event in pygame.event.get():#Get the change events
         if event.type == QUIT:#When the user close the game
             pygame.quit()#Quit of the game
-        if event.type == KEYDOWN:
-            if event.key == K_UP:
-                my_direction = UP
-            if event.key == K_DOWN:
-                my_direction = DOWN
-            if event.key == K_LEFT:
-                my_direction = LEFT
-            if event.key == K_RIGHT:
-                my_direction = RIGHT
+        if event.type == KEYDOWN:#If there're event changes through the keyboard
+            if event.key == K_UP:#If the 'up' key is pressed
+                my_direction = UP#Then my direction is up
+            if event.key == K_DOWN:#If the 'down' key is pressed
+                my_direction = DOWN#Then my direction is down
+            if event.key == K_LEFT:#If the 'left' key is pressed
+                my_direction = LEFT#Then my direction is left
+            if event.key == K_RIGHT:#If the 'right' key is pressed
+                my_direction = RIGHT#Then my direction is right
     if my_direction == UP:#If my direction goes up
         snake[0]=(snake[0][0], snake[0][1]-10)#Decrease the 'y' by 10px (1 Square)
     if my_direction == DOWN:#If my direction goes down
