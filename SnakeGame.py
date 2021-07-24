@@ -1,5 +1,6 @@
 import pygame, random
 from pygame.locals import * #From Pygame import all locals
+#Note: 10px = 1 Square
 def on_grid_random():
     #Generates randowmly the apple on the x, y axis of the grid between 0 and 590
     x=random.randint(0,590)
