@@ -14,20 +14,24 @@ apple_pos=(random.randint(0,590), random.randint(0,590))#Set apple position on t
 apple=pygame.Surface((10,10))#Fills the apple with 10px in x and y axis (1 Square)
 apple.fill((255,0,0))#Apple color
 my_direction=LEFT #Always at the beginning, the snake'll go to the left
+clock=pygame.time.Clock()
 while True: #Infinite loop
+    clock.tick(20)
     for event in pygame.event.get():#Get the change events
         if event.type == QUIT:#When the user close the game
             pygame.quit()#Quit of the game
-    if my_direction == UP:
-        snake[0]=(snake[0][0], snake[0][1]-10)
-    if my_direction == DOWN:
-        snake[0]=(snake[0][0], snake[0][1]+10)
-    if my_direction == RIGHT:
-        snake[0]=(snake[0][0]+10, snake[0][1])
-    if my_direction == LEFT:
-        snake[0]=(snake[0][0]-10, snake[0][1])
+    if my_direction == UP:#If my direction goes up
+        snake[0]=(snake[0][0], snake[0][1]-10)#Decrease the 'y' by 10px (1 Square)
+    if my_direction == DOWN:#If my direction goes down
+        snake[0]=(snake[0][0], snake[0][1]+10)#Increase the 'y' by 10px (1 Square)
+    if my_direction == RIGHT:#If my direction goes right
+        snake[0]=(snake[0][0]+10, snake[0][1])#Increase the 'x' by 10px (1 Square)
+    if my_direction == LEFT:#If my direction goes left
+        snake[0]=(snake[0][0]-10, snake[0][1])#Decrease the 'x' by 10px (1 Square)
+    #Each position of the snake's body will occupy the position that the front body was occupying
     for i in range(len(snake)-1,0,-1):
         snake[i]=(snake[i-1][0],snake[i-1][1])
+    
     screen.fill((0,0,0))#Update screen / clean screen
     screen.blit(apple, apple_pos)#Gets the apple and its position
     for pos in snake:#For each position in the snake
