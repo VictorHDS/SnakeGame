@@ -1,5 +1,9 @@
 import pygame, random
 from pygame.locals import * #From Pygame import all locals
+def on_grid_random():
+    x=random.randint(0,590)
+    y=random.randint(0,590)
+    return(x//10*10,y//10*10)
 UP=0
 RIGHT=1
 DOWN=2
@@ -10,7 +14,7 @@ pygame.display.set_caption('Snake Game')#Window name display
 snake=[(200,200),(210,200),(220,200)]#A list with 3 tuples, each one is a spawn part of the snake.
 snake_skin=pygame.Surface((10,10))#Fills the snake with 10px in x and y axis (1 Square)
 snake_skin.fill((255,255,255))#Snake color
-apple_pos=(random.randint(0,590), random.randint(0,590))#Set apple position on the screen randomly with 'random' module, between 0 and 590 (last possible position without get off the screen)
+apple_pos=on_grid_random()
 apple=pygame.Surface((10,10))#Fills the apple with 10px in x and y axis (1 Square)
 apple.fill((255,0,0))#Apple color
 my_direction=LEFT #Always at the beginning, the snake'll go to the left
