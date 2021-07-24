@@ -1,8 +1,10 @@
 import pygame, random
 from pygame.locals import * #From Pygame import all locals
 def on_grid_random():
+    #Generates randowmly the apple on the x, y axis of the grid between 0 and 590
     x=random.randint(0,590)
     y=random.randint(0,590)
+    #It performs an integer division by 10, so even if there's a fragmented number in that division, that number will revert a multiple of 10 when multiplying by 10
     return(x//10*10,y//10*10)
 UP=0
 RIGHT=1
