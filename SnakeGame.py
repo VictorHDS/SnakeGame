@@ -6,7 +6,8 @@ def on_grid_random():
     y=random.randint(0,590)
     #It performs an integer division by 10, so even if there's a fragmented number in that division, that number will revert a multiple of 10 when multiplying by 10
     return(x//10*10,y//10*10)
-def collision(c1,c2):
+def collision(c1,c2):#Collision function between two distinct cells
+    #There'll be collision when both 0 and 1 positions of one cell are the same as the other cell
     return (c1[0]==c2[0]) and (c1[1]==c2[1])
 UP=0
 RIGHT=1
@@ -37,13 +38,13 @@ while True: #Infinite loop
                 my_direction = LEFT#Then my direction is left
             if event.key == K_RIGHT:#If the 'right' key is pressed
                 my_direction = RIGHT#Then my direction is right
-    if collision(snake[0],apple_pos):
-        apple_pos = on_grid_random()
-        snake.append((0,0))
+    if collision(snake[0],apple_pos):#If there's a collision between the snake's head and the apple's position
+        apple_pos = on_grid_random()#The apple'll be generated once again randomly in the grid
+        snake.append((0,0))#Adds +1 square to snake size
     #Each position of the snake's body will occupy the position that the front body was occupying
     for i in range(len(snake)-1,0,-1):#The tail'll occupy the previous position
         snake[i]=(snake[i-1][0],snake[i-1][1])
-        
+
     if my_direction == UP:#If my direction goes up
         snake[0]=(snake[0][0], snake[0][1]-10)#Decrease the 'y' by 10px (1 Square)
     if my_direction == DOWN:#If my direction goes down
