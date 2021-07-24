@@ -6,6 +6,8 @@ def on_grid_random():
     y=random.randint(0,590)
     #It performs an integer division by 10, so even if there's a fragmented number in that division, that number will revert a multiple of 10 when multiplying by 10
     return(x//10*10,y//10*10)
+def collision(c1,c2):
+    return (c1[0]==c2[0]) and (c1[1]==c2[1])
 UP=0
 RIGHT=1
 DOWN=2
@@ -16,7 +18,7 @@ pygame.display.set_caption('Snake Game')#Window name display
 snake=[(200,200),(210,200),(220,200)]#A list with 3 tuples, each one is a spawn part of the snake.
 snake_skin=pygame.Surface((10,10))#Fills the snake with 10px in x and y axis (1 Square)
 snake_skin.fill((255,255,255))#Snake color
-apple_pos=on_grid_random()
+apple_pos=on_grid_random()#Get the 'on_grid_random' function
 apple=pygame.Surface((10,10))#Fills the apple with 10px in x and y axis (1 Square)
 apple.fill((255,0,0))#Apple color
 my_direction=LEFT #Always at the beginning, the snake'll go to the left
@@ -35,6 +37,13 @@ while True: #Infinite loop
                 my_direction = LEFT#Then my direction is left
             if event.key == K_RIGHT:#If the 'right' key is pressed
                 my_direction = RIGHT#Then my direction is right
+    if collision(snake[0],apple_pos):
+        apple_pos = on_grid_random()
+        snake.append((0,0))
+    #Each position of the snake's body will occupy the position that the front body was occupying
+    for i in range(len(snake)-1,0,-1):#The tail'll occupy the previous position
+        snake[i]=(snake[i-1][0],snake[i-1][1])
+        
     if my_direction == UP:#If my direction goes up
         snake[0]=(snake[0][0], snake[0][1]-10)#Decrease the 'y' by 10px (1 Square)
     if my_direction == DOWN:#If my direction goes down
@@ -43,10 +52,6 @@ while True: #Infinite loop
         snake[0]=(snake[0][0]+10, snake[0][1])#Increase the 'x' by 10px (1 Square)
     if my_direction == LEFT:#If my direction goes left
         snake[0]=(snake[0][0]-10, snake[0][1])#Decrease the 'x' by 10px (1 Square)
-    
-    #Each position of the snake's body will occupy the position that the front body was occupying
-    for i in range(len(snake)-1,0,-1):#The tail'll occupy the previous position
-        snake[i]=(snake[i-1][0],snake[i-1][1])
     
     screen.fill((0,0,0))#Update screen / clean screen
     screen.blit(apple, apple_pos)#Gets the apple and its position
